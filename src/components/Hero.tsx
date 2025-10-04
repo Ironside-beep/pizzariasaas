@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { MapPin, Instagram, MenuSquare, Sparkles } from "lucide-react";
-import { useStore } from "@/contexts/StoreContext";
+import { useStore, useIsStoreOpen } from "@/contexts/StoreContext";
 import { Link } from "react-router-dom";
+import { Badge } from "./ui/badge";
 
 export const Hero = () => {
   const { storeInfo } = useStore();
+  const isOpen = useIsStoreOpen(); // Usando contexto para saber se a loja está aberta
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -24,18 +26,34 @@ export const Hero = () => {
   return (
     <section className="min-h-screen flex items-center justify-center px-4 pt-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZjZiMzUiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE0YzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNnpNNiAzNGMzLjMxIDAgNiAyLjY5IDYgNnMtMi42OSA2LTYgNi02LTIuNjktNi02IDIuNjktNiA2LTZ6TTM2IDM0YzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-50" />
-      
+
       <div
         className={`text-center space-y-8 transition-all duration-1000 transform relative z-10 ${
           show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
         <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 mb-4">
+
+          {/* Novo Badge Aberto/Fechado acima do balão */}
+          <div className="flex justify-center mb-2">
+            <Badge
+              variant={isOpen ? "default" : "destructive"}
+              className={`text-lg px-5 py-3 ${isOpen ? "bg-accent" : "bg-destructive"}`}
+            >
+              <span className="flex items-center gap-2 font-semibold text-xl">
+                <span
+                  className={`w-3 h-3 rounded-full ${isOpen ? "bg-accent-foreground" : "bg-destructive-foreground"} animate-pulse`}
+                />
+                {isOpen ? "Aberto" : "Fechado"}
+              </span>
+            </Badge>
+          </div>
+
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 mb-4 justify-center">
             <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-primary">Entrega rápida e saborosa</span>
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-bold">
             Bem-vindo à
           </h1>
@@ -54,12 +72,12 @@ export const Hero = () => {
               Ver Cardápio
             </Button>
           </Link>
-          
+
           <Button size="lg" variant="outline" onClick={openLocation}>
             <MapPin className="mr-2 h-5 w-5" />
             Como Chegar
           </Button>
-          
+
           <Button size="lg" variant="outline" onClick={openInstagram}>
             <Instagram className="mr-2 h-5 w-5" />
             Instagram
