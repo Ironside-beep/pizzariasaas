@@ -25,13 +25,10 @@ const queryClient = new QueryClient();
 const ProtectedAdminRoute = ({ children }: { children: JSX.Element }) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  let key = params.get("key");
+  const key = params.get("key");
 
-  // Se a URL vier com caracteres especiais, decodifica
-  if (key) key = decodeURIComponent(key);
-
-  // Token do cliente
-  if (key !== "Ironside!$Adm") {
+  // Token simples e seguro
+  if (key !== "IronsideAdm123") {
     return <Navigate to="/notfound" replace />;
   }
 
