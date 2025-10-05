@@ -16,12 +16,14 @@ export const Header = () => {
           {/* Badge "Aberto/Fechado" removido do Header */}
         </div>
 
+        {
         <Link to="/admin/login">
           <Button variant="outline" size="sm">
             <Shield className="mr-2 h-4 w-4" />
             Admin
           </Button>
         </Link>
+        }
       </div>
     </header>
   );

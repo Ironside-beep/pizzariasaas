@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./contexts/CartContext";
 import { StoreProvider } from "./contexts/StoreContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -21,20 +21,6 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Componente para proteger rotas do admin
-const ProtectedAdminRoute = ({ children }: { children: JSX.Element }) => {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const key = params.get("key");
-
-  // Substitua "MEU-TOKEN-SECRETO" pelo token que você vai passar pro cliente
-  if (key !== "I!$Adm") {
-    return <Navigate to="/notfound" replace />;
-  }
-
-  return children;
-};
-
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -45,64 +31,17 @@ const App = () => (
             <Sonner />
             <BrowserRouter>
               <Routes>
-                {/* Rotas públicas */}
                 <Route path="/" element={<Index />} />
                 <Route path="/cardapio" element={<Menu />} />
                 <Route path="/promocoes" element={<Promotions />} />
                 <Route path="/auth/login" element={<AuthLogin />} />
                 <Route path="/auth/register" element={<AuthRegister />} />
-
-                {/* Rotas admin protegidas */}
-                <Route
-                  path="/admin/login"
-                  element={
-                    <ProtectedAdminRoute>
-                      <AdminLogin />
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/dashboard"
-                  element={
-                    <ProtectedAdminRoute>
-                      <AdminDashboard />
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/store-info"
-                  element={
-                    <ProtectedAdminRoute>
-                      <StoreInfo />
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/menu"
-                  element={
-                    <ProtectedAdminRoute>
-                      <MenuManagement />
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/promotions"
-                  element={
-                    <ProtectedAdminRoute>
-                      <PromotionManagement />
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/security"
-                  element={
-                    <ProtectedAdminRoute>
-                      <Security />
-                    </ProtectedAdminRoute>
-                  }
-                />
-
-                {/* Página 404 */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/store-info" element={<StoreInfo />} />
+                <Route path="/admin/menu" element={<MenuManagement />} />
+                <Route path="/admin/promotions" element={<PromotionManagement />} />
+                <Route path="/admin/security" element={<Security />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
