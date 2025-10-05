@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Shield } from "lucide-react";
 
 export const Header = () => {
   return (
@@ -14,15 +16,12 @@ export const Header = () => {
           {/* Badge "Aberto/Fechado" removido do Header */}
         </div>
 
-        {/* Botão Admin removido para não aparecer no site público */}
-        {/*
         <Link to="/admin/login">
           <Button variant="outline" size="sm">
             <Shield className="mr-2 h-4 w-4" />
             Admin
           </Button>
         </Link>
-        */}
       </div>
     </header>
   );

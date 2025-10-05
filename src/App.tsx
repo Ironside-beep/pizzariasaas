@@ -27,8 +27,8 @@ const ProtectedAdminRoute = ({ children }: { children: JSX.Element }) => {
   const params = new URLSearchParams(location.search);
   const key = params.get("key");
 
-  // Token simples e seguro
-  if (key !== "IronsideAdm123") {
+  // Substitua "MEU-TOKEN-SECRETO" pelo token que você vai passar pro cliente
+  if (key !== "I!$Adm") {
     return <Navigate to="/notfound" replace />;
   }
 
